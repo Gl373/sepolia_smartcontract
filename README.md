@@ -1,57 +1,70 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# Poängsystem för medlemmar – Sepolia Smart Contract
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+Detta projekt är en inlämningsuppgift för kursen Blockchainutveckling 2025. Projektet implementerar ett smart kontrakt i Solidity som fungerar som ett poängsystem för medlemmar, med möjlighet att byta in poäng mot belöningar.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+## Vald uppgift
 
-## Project Overview
+**Tema:** Poängsystem för medlemmar
 
-This example project includes:
+- Vem som helst kan gå med som medlem.
+- Medlemmar kan tjäna in poäng och se sitt poängsaldo.
+- Poäng kan överföras mellan medlemmar.
+- En administratör kan tilldela poäng.
+- Poäng kan bytas in mot belöningar (t.ex. T-shirt eller VIP-status).
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+## Grundläggande krav (G)
+- Minst en struct eller enum
+- Minst en mapping eller array
+- En constructor
+- Minst en custom modifier
+- Minst ett event för att logga viktiga händelser
+- Tester som täcker grundläggande funktionalitet
+- Test coverage på minst 40%
 
-## Usage
+## För högre betyg (VG)
+- Minst ett custom error, samt minst en require, en assert och en revert
+- Fallback och/eller receive-funktion
+- Kontraktet distribuerat och verifierat på Sepolia/Etherscan:
+https://sepolia.etherscan.io/address/0x741254509b3E8f4318aE01C5775F53c25fAe5dF1#code 
+- Test coverage på minst 90%
+- Minst tre gasoptimeringar/säkerhetsåtgärder (se nedan)
 
-### Running Tests
+## Gasoptimeringar och säkerhetsåtgärder
+1. **Exempel:** Använder custom errors istället för string-meddelanden för att spara gas.
+2. **Exempel:** Internal functions för återanvändning och minskad kodupprepning.
+3. **Exempel:** Checks-Effects-Interactions-mönster för att undvika reentrancy.
 
-To run all the tests in the project, execute the following command:
 
-```shell
-npx hardhat test
-```
+## Installation och användning
 
-You can also selectively run the Solidity or `mocha` tests:
+1. Klona repot:
+   ```sh
+   git clone https://github.com/Gl373/sepolia_smartcontract.git
+   cd sepolia_smartcontract
+   ```
+2. Installera dependencies:
+   ```sh
+   npm install
+   ```
+3. Kör tester:
+   ```sh
+   npx hardhat test
+   ```
+4. Kör test coverage:
+   ```sh
+   npx hardhat test --coverage
+   ```
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
-```
+## Deployment
 
-### Make a deployment to Sepolia
+För att deploya till Sepolia:
+1. Sätt din privata nyckel i miljövariabeln `SEPOLIA_PRIVATE_KEY`.
+2. Kör:
+   ```sh
+   npx hardhat ignition deploy --network sepolia ignition/modules/PointsToReward.ts
+   ```
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
 
-To run the deployment to a local chain:
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
+---
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```

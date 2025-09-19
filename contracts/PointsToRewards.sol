@@ -59,7 +59,8 @@ contract PointsToRewards {
             cost = 100;
         }
         require(members[msg.sender].points >= cost, "Insufficient points");
-        members[msg.sender].points -= cost;
+        uint currentBalance = members[msg.sender].points;
+        members[msg.sender].points = currentBalance - cost;
         emit RewardRedeemed(msg.sender, reward);
     }
 }
